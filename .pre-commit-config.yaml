@@ -1,0 +1,52 @@
+# .pre-commit-config.yaml
+
+repos:
+  - repo: local
+    hooks:
+    # Frontend
+
+    - id: frontend-eslint
+      name: Frontend ESLint
+      entry: powershell -ExecutionPolicy Bypass -File scripts/frontend-eslint.ps1
+      language: system
+      files: ^frontend/.*\.(js|jsx|ts|tsx)$
+
+    - id: frontend-prettier
+      name: Frontend Prettier
+      entry: powershell -ExecutionPolicy Bypass -File scripts/frontend-prettier.ps1
+      language: system
+      files: ^frontend/.*\.(js|jsx|ts|tsx|json|md|css)$
+
+    - id: frontend-typecheck
+      name: Frontend Type Check
+      entry: powershell -ExecutionPolicy Bypass -File scripts/frontend-typecheck.ps1
+      language: system
+      files: ^frontend/.*\.(ts|tsx)$
+      pass_filenames: false
+
+    # Backend
+    - id: backend-ruff-check
+      name: Backend Ruff Check
+      entry: powershell -ExecutionPolicy Bypass -File scripts/backend-ruff-check.ps1
+      language: system
+      files: ^backend/.*\.py$
+
+    - id: backend-ruff-format
+      name: Backend Ruff Format
+      entry: powershell -ExecutionPolicy Bypass -File scripts/backend-ruff-format.ps1
+      language: system
+      files: ^backend/.*\.py$
+
+    - id: backend-pyright
+      name: Backend Pyright
+      entry: powershell -ExecutionPolicy Bypass -File scripts/backend-pyright.ps1
+      language: system
+      files: ^backend/.*\.py$
+      pass_filenames: false
+
+    - id: backend-compile
+      name: Backend Python Compile Check
+      entry: powershell -ExecutionPolicy Bypass -File scripts/backend-compile.ps1
+      language: system
+      files: ^backend/.*\.py$
+      pass_filenames: false
