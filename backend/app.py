@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from flask import Flask
 
 from .api import register_blueprints
@@ -15,6 +16,8 @@ def create_app():
     - Blueprint
     - Middleware
     """
+    load_dotenv()
+
     app = Flask(__name__)
 
     AppLogger.initialize()

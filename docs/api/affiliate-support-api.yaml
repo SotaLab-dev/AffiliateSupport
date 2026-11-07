@@ -2,13 +2,14 @@ openapi: 3.0.3
 
 info:
   title: Affiliate Support API
-  version: 1.0.0
+  version: 1.0.1
   description: |
     ## 変更履歴
 
     | 版 | 更新日 | 概要 | 詳細 |
     |-----|----------|------|------|
     | 1.0.0 | 2026-10-31 | 初版作成 | 死活確認APIの仕様を記載 |
+    | 1.0.1 | 2026-11-04 | SNS投稿API追加 | Ollamaによる投稿文生成 |
 
 paths:
   /health:
@@ -16,7 +17,6 @@ paths:
       tags:
         - Health
       summary: 死活確認API
-      description: アプリケーションの稼働状態を確認します。
       operationId: getHealth
       responses:
         "200":
@@ -26,8 +26,47 @@ paths:
               schema:
                 $ref: "#/components/schemas/HealthResponse"
 
+  /api/sns-post/generate:
+    post:
+      tags:
+        - SNS
+      summary: SNS投稿文生成
+      operationId: generateSnsPost
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SnsPostRequest"
+
+      responses:
+
+        "200":
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SnsPostResponse"
+
+        "400":
+          description: リクエストエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+        "500":
+          description: サーバエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
+
   schemas:
+
     HealthResponse:
       type: object
       required:
@@ -35,5 +74,46 @@ components:
       properties:
         status:
           type: string
-          description: アプリケーションの稼働状態
           example: ok
+
+    SnsPostRequest:
+      type: object
+      required:
+        - content_id
+      properties:
+        content_id:
+          type: string
+          example: midv00678
+
+    SnsPostResponse:
+      type: object
+      required:
+        - content_id
+        - title
+        - post_text
+
+      properties:
+        content_id:
+          type: string
+
+        title:
+          type: string
+
+        post_text:
+          type: string
+
+    ErrorResponse:
+      type: object
+
+      required:
+        - code
+        - message
+
+      properties:
+        code:
+          type: string
+          example: SYSTEM_ERROR
+
+        message:
+          type: string
+          example: システムエラーが発生しました
