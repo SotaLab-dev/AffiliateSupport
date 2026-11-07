@@ -7,12 +7,27 @@
  * | 版 | 更新日 | 概要 | 詳細 |
  * |-----|----------|------|------|
  * | 1.0.0 | 2026-10-31 | 初版作成 | 死活確認APIの仕様を記載 |
+ * | 1.0.1 | 2026-11-04 | SNS投稿API追加 | Ollamaによる投稿文生成 |
  *
- * OpenAPI spec version: 1.0.0
+ * OpenAPI spec version: 1.0.1
  */
 export interface HealthResponse {
-  /** アプリケーションの稼働状態 */
   status: string;
+}
+
+export interface SnsPostRequest {
+  content_id: string;
+}
+
+export interface SnsPostResponse {
+  content_id: string;
+  title: string;
+  post_text: string;
+}
+
+export interface ErrorResponse {
+  code: string;
+  message: string;
 }
 
 export type getHealthResponse200 = {
@@ -36,7 +51,6 @@ export const getGetHealthUrl = () => {
 }
 
 /**
- * アプリケーションの稼働状態を確認します。
  * @summary 死活確認API
  */
 export const getHealth = async ( options?: RequestInit): Promise<getHealthResponse> => {
@@ -55,4 +69,73 @@ export const getHealth = async ( options?: RequestInit): Promise<getHealthRespon
 
   const data: getHealthResponse['data'] = body ? JSON.parse(body) : {}
   return { data, status: res.status, headers: res.headers } as getHealthResponse
+}
+
+
+
+export type generateSnsPostResponse200 = {
+  data: SnsPostResponse
+  status: 200
+}
+
+export type generateSnsPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type generateSnsPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type generateSnsPostResponseSuccess = (generateSnsPostResponse200) & {
+  headers: Headers;
+};
+export type generateSnsPostResponseError = (generateSnsPostResponse400 | generateSnsPostResponse500) & {
+  headers: Headers;
+};
+
+export type generateSnsPostResponse = (generateSnsPostResponseSuccess | generateSnsPostResponseError)
+
+export const getGenerateSnsPostUrl = () => {
+
+
+
+
+  return `/api/sns-post/generate`
+}
+
+/**
+ * @summary SNS投稿文生成
+ */
+export const generateSnsPost = async (snsPostRequest: SnsPostRequest, options?: RequestInit): Promise<generateSnsPostResponse> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+const res = await fetch(getGenerateSnsPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(snsPostRequest)
+  }
+)
+
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: generateSnsPostResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as generateSnsPostResponse
 }
