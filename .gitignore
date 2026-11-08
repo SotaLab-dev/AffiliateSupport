@@ -23,3 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 *.pyc
+*storybook.log
+storybook-static
