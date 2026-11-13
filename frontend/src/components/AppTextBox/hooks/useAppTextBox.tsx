@@ -1,16 +1,15 @@
 import type { ChangeEvent } from 'react';
 
-import { useAppSnackbar } from '@/components/AppSnackbar/hooks/useAppSnackbar';
 import { MESSAGE } from '@/constants/message';
 import { isHalfWidth } from '@/utils/isHalfWidth';
 
-import type { AppTextBoxProps } from '../types';
+import type { UseAppTextBoxProps } from '../types';
 
 export const useAppTextBox = ({
   mode,
   onChange,
-}: Pick<AppTextBoxProps, 'mode' | 'onChange'>) => {
-  const { showSnackbar } = useAppSnackbar();
+  showSnackbar
+}: UseAppTextBoxProps) => {
 
   const handleChange = (
       event: ChangeEvent<HTMLInputElement>,
@@ -20,7 +19,7 @@ export const useAppTextBox = ({
       if (mode === 'account' &&
       !isHalfWidth(inputValue)
     ) {
-      showSnackbar(
+      showSnackbar?.(
         MESSAGE.INPUT.HALF_WIDTH_ONLY,
         'warning',
       );
