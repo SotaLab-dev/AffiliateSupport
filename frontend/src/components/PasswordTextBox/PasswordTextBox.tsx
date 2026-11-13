@@ -6,15 +6,15 @@ import TextField from '@mui/material/TextField';
 
 import { usePasswordTextBox } from '@/components/PasswordTextBox/hooks/usePasswordTextBox';
 
-import { useAppSnackbar } from '../AppSnackbar/hooks/useAppSnackbar';
+import { StyledPasswordTextBox } from './styles';
 import type { PasswordTextBoxProps } from './types';
 
 export const PasswordTextBox = ({
   value,
   onChange,
+  showSnackbar,
   ...props
 }: PasswordTextBoxProps) => {
-  const { showSnackbar } = useAppSnackbar();
   
   const { 
     showPassword, 
@@ -27,7 +27,7 @@ export const PasswordTextBox = ({
     <TextField
       value={value}
       type={showPassword ? 'text' : 'password'}
-      fullWidth
+      sx={StyledPasswordTextBox}
       onChange={handleChange}
       onPaste={handlePaste}
       slotProps={{
