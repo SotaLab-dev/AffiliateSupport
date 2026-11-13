@@ -4,14 +4,16 @@ import { useState } from 'react';
 import { AppSnackbar } from '../AppSnackbar';
 
 const meta:Meta <typeof AppSnackbar>= {
+  title: 'Components/AppSnackbar',
   component: AppSnackbar,
+  tags: ['autodocs'],
     render: (args) => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
         return (
             <AppSnackbar
                 {...args}
                 open={open}
-                severity='success'
+                severity='info'
                 onClose={() => setOpen(!open)}
             />
         );

@@ -12,7 +12,7 @@ export const AppSnackbar = ({
   return (
     <Snackbar
       open={open}
-      autoHideDuration={3000}
+      autoHideDuration={10000}
       onClose={onClose}
       anchorOrigin={{
         vertical: 'bottom',
