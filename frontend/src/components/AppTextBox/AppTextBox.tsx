@@ -18,7 +18,7 @@ export const AppTextBox = ({
       value={value}
       onChange={handleChange}
       {...props}
-      sx={StyledTextBox}
+      sx={StyledTextBox.main}
     />
   );
 }
