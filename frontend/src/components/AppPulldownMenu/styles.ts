@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 
 export const StyledSelect = styled('select')({
-  width: '240px',
+  width: '150px',
   height: '40px',
   padding: '0 12px',
   borderRadius: '4px',
