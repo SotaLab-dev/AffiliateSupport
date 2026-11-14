@@ -8,7 +8,8 @@ export const styles: {
     mb: 2,
     display: "flex",
     flexDirection: "row",
-    gap: 3
+    gap: 3,
+    alignContent: "center"
   },
   formLabel: {
     alignContent: "center"
