@@ -3,7 +3,7 @@ from functools import lru_cache
 from sqlalchemy import Engine, create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
-from ..config.database import DatabaseConfig
+from config.database import DatabaseConfig
 
 
 @lru_cache(maxsize=1)

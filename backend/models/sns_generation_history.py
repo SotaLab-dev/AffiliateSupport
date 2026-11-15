@@ -1,6 +1,6 @@
 from sqlalchemy import BigInteger, Column, DateTime, String, Text
 
-from ..database.base import Base
+from database.base import Base
 
 
 class SnsGenerationHistory(Base):

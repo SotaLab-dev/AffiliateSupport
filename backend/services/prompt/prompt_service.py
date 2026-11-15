@@ -1,8 +1,7 @@
 from sqlalchemy.orm import Session
 
+from repositories.prompt_template_repository import PromptTemplateRepository
 from services.dmm.FanzaWork_dto import FanzaWork
-
-from ...repositories.prompt_template_repository import PromptTemplateRepository
 
 
 class PromptService:

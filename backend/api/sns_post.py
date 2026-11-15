@@ -2,7 +2,7 @@ import traceback
 
 from flask import Blueprint, jsonify, request
 
-from ..services.sns_post_service import SnsPostService
+from services.sns_post_service import SnsPostService
 
 sns_post_bp = Blueprint(
     "sns_post",

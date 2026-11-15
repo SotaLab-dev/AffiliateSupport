@@ -1,6 +1,6 @@
 from sqlalchemy import BigInteger, Boolean, Column, String, Text
 
-from ..database.base import Base
+from database.base import Base
 
 
 class PromptTemplate(Base):

@@ -2,7 +2,7 @@ import os
 
 import requests
 
-from ...services.llm.base import BaseLlmClient
+from services.llm.base import BaseLlmClient
 
 
 class OllamaClient(BaseLlmClient):

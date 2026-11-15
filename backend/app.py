@@ -1,9 +1,9 @@
 from dotenv import load_dotenv
 from flask import Flask
 
-from .api import register_blueprints
-from .logging_system.app_logger import AppLogger
-from .middleware.logging_middleware import register_logging_middleware
+from api import register_blueprints
+from logging_system.app_logger import AppLogger
+from middleware.logging_middleware import register_logging_middleware
 
 
 def create_app():

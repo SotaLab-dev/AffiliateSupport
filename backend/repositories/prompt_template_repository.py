@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from ..models.prompt_template import PromptTemplate
+from models.prompt_template import PromptTemplate
 
 
 class PromptTemplateRepository:

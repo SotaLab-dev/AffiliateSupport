@@ -1,8 +1,8 @@
 from os import getenv
 
-from ...services.llm.ollama_client import OllamaClient
-from ...services.llm.openai_client import OpenAiClient
-from .base import BaseLlmClient
+from services.llm.base import BaseLlmClient
+from services.llm.ollama_client import OllamaClient
+from services.llm.openai_client import OpenAiClient
 
 
 class LlmFactory:

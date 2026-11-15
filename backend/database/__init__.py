@@ -1,5 +1,5 @@
-from ..database.base import Base
-from ..database.session import get_engine
+from database.base import Base
+from database.session import get_engine
 
 
 def init_db():

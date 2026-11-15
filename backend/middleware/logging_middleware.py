@@ -7,7 +7,7 @@ from typing import NoReturn
 from flask import Flask, Response, g, request
 from werkzeug.exceptions import HTTPException
 
-from ..logging_system.app_logger import AppLogger
+from logging_system.app_logger import AppLogger
 
 
 def register_logging_middleware(app: Flask) -> None:

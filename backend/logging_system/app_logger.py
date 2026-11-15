@@ -5,7 +5,7 @@ from types import TracebackType
 
 from flask import g, has_request_context, request
 
-from ..logging_system.handlers import LOG_DIR, DailyRotatingFileHandler
+from logging_system.handlers import LOG_DIR, DailyRotatingFileHandler
 
 LOG_NAME = "affiliate_support_logger"
 ERROR_LOG_NAME = "affiliate_support_error_logger"

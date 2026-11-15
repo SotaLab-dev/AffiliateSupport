@@ -1,12 +1,12 @@
 from datetime import datetime
 from os import getenv
 
-from ..database.session import get_session
-from ..models.sns_generation_history import SnsGenerationHistory
-from ..repositories.sns_generation_repository import SnsGenerationRepository
-from ..services.dmm.fanza_work_service import FanzaWorkService
-from ..services.llm.factory import LlmFactory
-from ..services.prompt.prompt_service import PromptService
+from database.session import get_session
+from models.sns_generation_history import SnsGenerationHistory
+from repositories.sns_generation_repository import SnsGenerationRepository
+from services.dmm.fanza_work_service import FanzaWorkService
+from services.llm.factory import LlmFactory
+from services.prompt.prompt_service import PromptService
 
 
 class SnsPostService:
