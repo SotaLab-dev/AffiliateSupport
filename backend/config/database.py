@@ -12,7 +12,7 @@ class DatabaseConfig:
     @classmethod
     def get_uri(cls) -> str:
         return (
-            "postgresql+psycopg://"
+            "postgresql+psycopg2://"
             f"{cls._require('DB_USER')}:"
             f"{cls._require('DB_PASSWORD')}@"
             f"{cls._require('DB_HOST')}:"

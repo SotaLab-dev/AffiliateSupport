@@ -1,4 +1,5 @@
 import os
+from typing import Any
 
 import requests
 
@@ -6,9 +7,9 @@ import requests
 class DmmClient:
     BASE_URL = "https://api.dmm.com/affiliate/v3/ItemList"
 
-    def item_list(self, params: dict):
+    def item_list(self, params: dict[str, Any]):
 
-        query = {
+        query: dict[str, Any] = {
             "api_id": os.getenv("DMM_API_ID"),
             "affiliate_id": os.getenv("DMM_AFFILIATE_ID"),
             "site": "FANZA",

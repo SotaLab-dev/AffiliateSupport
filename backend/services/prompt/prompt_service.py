@@ -1,3 +1,7 @@
+from sqlalchemy.orm import Session
+
+from services.dmm.FanzaWork_dto import FanzaWork
+
 from ...repositories.prompt_template_repository import PromptTemplateRepository
 
 
@@ -6,12 +10,9 @@ class PromptService:
 
     def build_prompt(
         self,
-        db,
-        work,
+        db: Session,
+        work: FanzaWork,
     ) -> str:
-
-        # 女優名などが取得できているか確認用
-        print(work.__dict__)
 
         template = PromptTemplateRepository().find_by_code(
             db=db,

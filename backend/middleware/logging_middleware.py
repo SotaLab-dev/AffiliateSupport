@@ -2,14 +2,15 @@
 
 import time
 import uuid
+from typing import NoReturn
 
-from flask import g, request
+from flask import Flask, Response, g, request
 from werkzeug.exceptions import HTTPException
 
 from ..logging_system.app_logger import AppLogger
 
 
-def register_logging_middleware(app):
+def register_logging_middleware(app: Flask) -> None:
     """
     Flaskアプリケーション全体へ
     以下を共通適用する。
@@ -29,7 +30,7 @@ def register_logging_middleware(app):
         g.start_time = time.time()
 
     @app.after_request
-    def after_request(response):
+    def after_request(response: Response) -> Response:
         start_time = getattr(g, "start_time", time.time())
 
         # アプリケーション性能監視のため
@@ -42,14 +43,14 @@ def register_logging_middleware(app):
 
         return response
 
+    @app.errorhandler(HTTPException)
+    def handle_http_exception(ex: HTTPException) -> HTTPException:
+        AppLogger.warn(
+            f"HTTP_EXCEPTION code={ex.code} path={request.path} message={ex.description}"
+        )
+        return ex
+
     @app.errorhandler(Exception)
-    def handle_exception(ex):
-
-        if isinstance(ex, HTTPException):
-            AppLogger.warn(f"HTTP_EXCEPTION={ex.code}PATH={request.path}MESSAGE={ex.description}")
-
-            return ex
-
-        AppLogger.error(f"UNHANDLED_EXCEPTION={str(ex)}")
-
+    def handle_unhandled_exception(ex: Exception) -> NoReturn:
+        AppLogger.error(f"UNHANDLED_EXCEPTION={ex!r} path={request.path}")
         raise ex

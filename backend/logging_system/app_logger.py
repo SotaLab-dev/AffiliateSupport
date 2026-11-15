@@ -1,6 +1,7 @@
 # logging_system/app_logger.py
 
 import logging
+from types import TracebackType
 
 from flask import g, has_request_context, request
 
@@ -28,6 +29,16 @@ LOG_FORMAT = (
     "%(method)s | "
     "%(request_id)s | "
     "%(message)s"
+)
+
+# logging が exc_info として受け付ける型。
+# 標準ライブラリ側の型（_ExcInfoType）は private で import できないため自前で定義する。
+type ExcInfo = (
+    bool
+    | BaseException
+    | tuple[type[BaseException], BaseException, TracebackType | None]
+    | tuple[None, None, None]
+    | None
 )
 
 
@@ -126,7 +137,13 @@ class AppLogger:
             cls.initialize()
 
     @classmethod
-    def _log(cls, logger: logging.Logger, level: int, message: str, **kwargs):
+    def _log(
+        cls,
+        logger: logging.Logger,
+        level: int,
+        message: str,
+        exc_info: ExcInfo = None,
+    ):
         """
         共通ログ出力処理。
 
@@ -134,7 +151,7 @@ class AppLogger:
         実際の呼び出し元ファイル・行番号を
         ログへ出力できるようにする。
         """
-        logger.log(level, message, stacklevel=3, **kwargs)
+        logger.log(level, message, stacklevel=3)
 
     @classmethod
     def _create_handler(
@@ -227,14 +244,14 @@ class AppLogger:
         )
 
     @classmethod
-    def error(cls, message: str, exc_info=True) -> None:
+    def error(cls, message: str, exc_info: ExcInfo = True) -> None:
 
         cls._ensure_initialized()
 
         cls._log(cls._get_error_logger(), logging.ERROR, message, exc_info=exc_info)
 
     @classmethod
-    def fatal(cls, message: str, exc_info=True) -> None:
+    def fatal(cls, message: str, exc_info: ExcInfo = True) -> None:
 
         cls._ensure_initialized()
 

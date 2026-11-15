@@ -1,3 +1,5 @@
+from typing import Any
+
 from ...services.dmm.dmm_client import DmmClient
 from ...services.dmm.mapper import DmmMapper
 
@@ -9,7 +11,7 @@ class FanzaSearchService:
 
     def search(
         self,
-        conditions: dict,
+        conditions: dict[str, Any],
     ):
 
         response = self.client.item_list(conditions)
